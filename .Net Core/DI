@@ -1,0 +1,75 @@
+This works because ASP.NET Core has a built-in dependency injection container that resolves controller constructors automatically at runtime.
+
+No explicit constructor wiring is required in Program.cs.
+
+Here is the precise explanation, step by step.
+
+1️⃣ Why AccountController Works Without Manual Wiring
+public AccountController(
+    IAccountRepository accountRepository,
+    IConfiguration configuration)
+
+
+When a request hits AccountController, ASP.NET Core:
+
+Creates the controller instance
+Looks at its constructor parameters
+Resolves each parameter from DI container
+Injects them automatically
+This behavior is by design.
+
+2️⃣ How IAccountRepository Is Resolved
+
+You registered it here:
+builder.Services.AddTransient<IAccountRepository, AccountRepository>();
+
+So at runtime:
+IAccountRepository → AccountRepository
+DI container knows exactly what to inject.
+
+3️⃣ How IConfiguration Is Resolved
+You never registered it manually — and that’s OK.
+ASP.NET Core registers these automatically:
+IConfiguration
+ILogger<T>
+IWebHostEnvironment
+IHttpContextAccessor (you added it explicitly)
+So this works out of the box:
+IConfiguration configuration
+
+4️⃣ Where the Controller Is Created
+This line activates controller discovery + DI:
+builder.Services.AddControllers();
+
+And this line maps routes to controllers:
+app.MapControllers();
+
+At request time:
+
+Routing → Controller Activator → DI Container → Constructor Injection
+
+6️⃣ Key Rule (Remember This)
+
+Controllers are not created by you.
+They are created by the ASP.NET Core runtime using DI.
+
+That’s why you never see new AccountController(...).
+
+7️⃣ One-Line Summary
+
+It works because:
+AddControllers() enables controller activation
+ASP.NET Core auto-registers IConfiguration
+You registered IAccountRepository
+DI resolves constructor parameters at runtime
+
+
+
+
+
+
+
+
+
+
+
