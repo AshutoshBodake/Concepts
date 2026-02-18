@@ -1,0 +1,22 @@
+| Feature                           | xUnit    | NUnit            |
+| --------------------------------- | -------- | ---------------- |
+| Microsoft ecosystem support       | ⭐⭐⭐⭐⭐    | ⭐⭐⭐              |
+| Default in ASP.NET templates      | ✅ Yes    | ❌ No             |
+| Parallel test support             | Built-in | Requires config  |
+| Dependency injection friendliness | Better   | OK               |
+| Attribute verbosity               | Cleaner  | Slightly heavier |
+| Community adoption (.NET Core)    | Higher   | Medium           |
+
+
+🚀 Recommendation for Your Project
+
+👉 Use xUnit
+
+Why?
+
+ASP.NET Core ecosystem favors it
+Better parallel execution model
+Cleaner test lifecycle
+No [TestFixture] noise
+Better suited for CI/CD pipelines (Azure DevOps)
+If you’re building modern .NET 8 architecture — xUnit fits better.
